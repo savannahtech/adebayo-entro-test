@@ -34,7 +34,7 @@ import {
   useCheckboxGroup,
   Checkbox,
 } from "@chakra-ui/react";
-import { FaChevronRight, FaPlus } from "react-icons/fa";
+import { FaChevronCircleLeft, FaChevronRight, FaPlus } from "react-icons/fa";
 import TodoCard from "../../components/todo_card";
 import moment from "moment";
 import { useForm } from "react-hook-form";
@@ -136,6 +136,7 @@ export default function CreateTask() {
     <Box p={16} bg={"#fff"}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box bg={"#F7F9FC"} p={6} w={"80%"} margin={"auto"}>
+          <Flex mb={5} alignItems={'center'} gap={2} onClick={()=>router.back()} cursor={'pointer'}> <FaChevronCircleLeft />  Go back</Flex>
           <Flex
             display={{ base: "block", md: "flex" }}
             alignItems={"center"}
