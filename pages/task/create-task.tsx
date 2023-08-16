@@ -38,6 +38,7 @@ import { FaChevronCircleLeft, FaChevronRight, FaPlus } from "react-icons/fa";
 import TodoCard from "../../components/todo_card";
 import moment from "moment";
 import { useForm } from "react-hook-form";
+import Head from "next/head";
 export default function CreateTask() {
   const router = useRouter();
   const { taskId } = router.query;
@@ -134,6 +135,17 @@ export default function CreateTask() {
   }, []);
   return (
     <Box p={16} bg={"#fff"}>
+        <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+        <meta
+          name="description"
+          content="Simple Next.js todo web application."
+        />
+        <title>Create Task</title>
+      </Head>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box bg={"#F7F9FC"} p={6} w={"80%"} margin={"auto"}>
           <Flex mb={5} alignItems={'center'} gap={2} onClick={()=>router.back()} cursor={'pointer'}> <FaChevronCircleLeft />  Go back</Flex>

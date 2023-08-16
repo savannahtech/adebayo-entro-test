@@ -85,6 +85,17 @@ export default function Home() {
 
   return (
     <Box p={16} bg={"#fff"}>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+        <meta
+          name="description"
+          content="Simple Next.js todo web application."
+        />
+        <title>Task</title>
+      </Head>
       <Center>
         <Box w={"50%"}>
           <Flex gap={2} mb={8}>
