@@ -25,7 +25,7 @@ export default function TodoCard({data = {
 
 }}) {
   return (
-    <Link href={`/task/${data?.id}`}>
+    <Link href={`/task/${data?.id}`}> 
         <Card
             py={2}
             px={5}
