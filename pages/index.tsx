@@ -61,7 +61,7 @@ export default function Home() {
   }
 
 
-  useHotkeys("ctrl+shift+y", () => alert("New"));
+  useHotkeys("ctrl+shift+1", () => alert("New"));
 
   React.useEffect(() => {
     getTasks({ page: page, type: 'prev' });
@@ -118,6 +118,7 @@ export default function Home() {
             )}
             {tasks.length >= 5 && (
               <Button
+                ml={3}
                 bg={"#0F52BA"}
                 color={"#fff"}
                 p={5}

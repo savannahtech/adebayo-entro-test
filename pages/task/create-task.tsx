@@ -95,7 +95,7 @@ export default function CreateTask() {
     control,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
+    formState : { errors, isSubmitting },
   } = useForm();
 
   async function onSubmit(values) {
@@ -151,7 +151,7 @@ export default function CreateTask() {
               display={{ base: "block", md: "flex" }}
               mt={2}
             >
-              <FormControl isInvalid={errors.title}>
+              <FormControl isInvalid={errors.title !== null}>
                 <FormLabel>Task Title</FormLabel>
                 <Input
                   id="title"
@@ -172,13 +172,13 @@ export default function CreateTask() {
                     borderBottom: "1px solid #E3E4E8",
                   }}
                 />
-                <FormErrorMessage>
+                {/* <FormErrorMessage>
                   {errors.title && errors.title.message}
-                </FormErrorMessage>
+                </FormErrorMessage> */}
               </FormControl>
 
               <Flex w={"70%"} mt={2}>
-                <FormControl isInvalid={errors.assignee}>
+                <FormControl isInvalid={errors.assignee !== null}>
                   <FormLabel>Assign To</FormLabel>
                   <Select
                     id="assignee"
@@ -195,9 +195,9 @@ export default function CreateTask() {
                       </option>
                     ))}
                   </Select>
-                  <FormErrorMessage>
+                  {/* <FormErrorMessage>
                     {errors.assignee && errors.assignee.message}
-                  </FormErrorMessage>
+                  </FormErrorMessage> */}
                 </FormControl>
               </Flex>
             </Flex>
@@ -209,7 +209,7 @@ export default function CreateTask() {
                 <Text py={4} fontSize={12} fontWeight={500} color={"#98A2B3"}>
                   Description
                 </Text>
-                <FormControl isInvalid={errors.description}>
+                <FormControl isInvalid={errors.description !== null}>
                   <Textarea
                     bg={"#EEF2F8"}
                     color={"#475467"}
@@ -223,9 +223,9 @@ export default function CreateTask() {
                     w={"100%"}
                     rows={7}
                   />
-                  <FormErrorMessage>
+                  {/* <FormErrorMessage>
                     {errors.description && errors.description.message}
-                  </FormErrorMessage>
+                  </FormErrorMessage> */}
                 </FormControl>
               </Box>
               <Box mt={8}>
