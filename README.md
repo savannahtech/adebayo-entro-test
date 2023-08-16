@@ -39,3 +39,9 @@ Start the server
   npm run dev
 ```
 
+Run Test
+
+```bash
+  npm run test
+```
+
