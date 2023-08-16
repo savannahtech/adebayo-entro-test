@@ -16,22 +16,26 @@ import {
   TabPanels,
   useToast
 } from "@chakra-ui/react";
-import { FaChevronRight, FaPlus } from "react-icons/fa";
+import { FaChevronCircleLeft, FaChevronRight, FaPlus } from "react-icons/fa";
 import TodoCard from "../../components/todo_card";
 import moment from "moment";
+
+type TaskDetailType = {
+  id: '',
+  title: '',
+  description: '',
+  createdAt: '',
+  assignee: {
+      name: '',
+  },
+  status: '',
+  relatedTasks: []
+};
+
 export default function TaskDetail() {
   const router = useRouter();
   const { taskId } = router.query;
-  const [task, setTask] = React.useState({
-    id: '',
-    title: '',
-    description: '',
-    createdAt: '',
-    assignee: {
-        name: '',
-    },
-    status: '',
-  });
+  const [task, setTask] = React.useState<TaskDetailType>();
   const toast = useToast()
   const getTask = async () => {
     try {
@@ -60,6 +64,7 @@ export default function TaskDetail() {
     <Box p={16} bg={"#fff"}>
       <Center>
         <Box bg={"#F7F9FC"} p={6} w={"50%"}>
+          <Flex mb={5} alignItems={'center'} gap={2} onClick={()=>router.back()} cursor={'pointer'}> <FaChevronCircleLeft/>  Go back</Flex>
           <Flex
             display={{ base: "block", md: "flex" }}
             alignItems={"center"}
@@ -129,18 +134,19 @@ export default function TaskDetail() {
 
               <TabPanels>
                 <TabPanel>
-                  <TodoCard />
-                  <TodoCard />
-                  <TodoCard />
-                  <TodoCard />
+                  {
+                    task?.relatedTasks?.map(e => (
+                      <TodoCard data={e} />
+                    ))
+                  }
 
-                  <Flex w={'200px'} gap={3} cursor={'pointer'} fontSize={16} fontWeight={500} color={'#475467'} alignItems={'center'}>
+                  {/* <Flex w={'200px'} gap={3} cursor={'pointer'} fontSize={16} fontWeight={500} color={'#475467'} alignItems={'center'}>
                     <FaPlus />
                     <Text>Link to other tasks</Text>
-                  </Flex>
+                  </Flex> */}
                 </TabPanel>
                 <TabPanel>
-                  <p>two!</p>
+                  <p>Watchers!</p>
                 </TabPanel>
               </TabPanels>
             </Tabs>

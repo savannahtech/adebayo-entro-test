@@ -14,7 +14,24 @@ export default async function handle(req, res) {
             });
       
             if(task !== null) {
-              res.json(task);
+              let relatedTasks = [];
+              if(task?.relatedTasks !== null){
+                const relatedIds = task?.relatedTasks.split(',')
+                const idsInt = [];
+                for (let i = 0; i < relatedIds.length; i++) {
+                  idsInt.push(Number(relatedIds[i]));
+                }
+                relatedTasks = await prisma.task.findMany({
+                  where: {
+                    id: { in: idsInt }, 
+                  }
+                })
+              }
+              
+              res.json({...task, relatedTasks: relatedTasks});
+
+
+
             } else {
               res.status(404).send({ error: "No Task Found" });
             }
@@ -29,7 +46,7 @@ export default async function handle(req, res) {
       
             const result = await prisma.task.create({
               data: {
-                name: name,
+                name: name, 
               //   author: { connect: { email: session?.user?.email } },
               },
             });
@@ -39,6 +56,7 @@ export default async function handle(req, res) {
             res.status(405).send({ error: "Method Not Allowed" });
           } 
     } catch (error) {
+        console.log(error) 
         res.status(500).send({ error });
     }
     
