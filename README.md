@@ -17,7 +17,7 @@ Task app for Entro
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/savannahtech/adebayo-entro-test.git
 ```
 
 Go to the project directory

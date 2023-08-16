@@ -113,32 +113,35 @@ export default function Home() {
               </Button>
             </Link>
           </Flex>
-          <Box>
-            {tasks?.map((e, i) => (
-              <TodoCard data={e} key={e?.id} />
-            ))}
-            {page > 1 && (
-              <Button
-                bg={"#0F52BA"}
-                color={"#fff"}
-                p={5}
-                onClick={() => handlePaginate(page - 1, 'prev')}
-              >
-                Previous
-              </Button>
-            )}
-            {tasks.length >= 5 && (
-              <Button
-                ml={3}
-                bg={"#0F52BA"}
-                color={"#fff"}
-                p={5}
-                onClick={() => handlePaginate(page + 1, 'next')}
-              >
-                Next
-              </Button>
-            )}
-          </Box>
+          <div data-testid="all-todo">
+            <Box>
+              {tasks?.map((e, i) => (
+                <TodoCard data={e} key={e?.id} />
+              ))}
+              {page > 1 && (
+                <Button
+                  bg={"#0F52BA"}
+                  color={"#fff"}
+                  p={5}
+                  onClick={() => handlePaginate(page - 1, 'prev')}
+                >
+                  Previous
+                </Button>
+              )}
+              {tasks.length >= 5 && (
+                <Button
+                  ml={3}
+                  bg={"#0F52BA"}
+                  color={"#fff"}
+                  p={5}
+                  onClick={() => handlePaginate(page + 1, 'next')}
+                >
+                  Next
+                </Button>
+              )}
+            </Box>
+          </div>
+          
         </Box>
       </Center>
     </Box>

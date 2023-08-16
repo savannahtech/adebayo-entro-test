@@ -1,5 +1,5 @@
 import prisma from "../../../lib/prisma";
-
+import type { NextApiRequest, NextApiResponse } from 'next';
 const secret = process.env.NEXTAUTH_SECRET;
 
 export default async function handle(req, res) {
@@ -8,7 +8,7 @@ export default async function handle(req, res) {
         if (req.method === "GET") {
             const {lastID, page} = req.query
             const tasks = await prisma.task.findMany({
-                skip:  page > 1 ? Number(page * 5) - 5: 0,
+                skip:  Number(page) > 1 ? Number(Number(page) * 5) - 5: 0,
                 take: 5,
                 // cursor: {
                 //   id: Number(page * 5),

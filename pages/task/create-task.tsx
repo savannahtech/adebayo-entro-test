@@ -41,7 +41,6 @@ import { useForm } from "react-hook-form";
 import Head from "next/head";
 export default function CreateTask() {
   const router = useRouter();
-  const { taskId } = router.query;
   const [users, setUsers] = React.useState([]);
   const [tasks, setTasks] = React.useState([]);
   const toast = useToast();
@@ -146,7 +145,7 @@ export default function CreateTask() {
         />
         <title>Create Task</title>
       </Head>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} data-testid="create-todo">
         <Box bg={"#F7F9FC"} p={6} w={"80%"} margin={"auto"}>
           <Flex mb={5} alignItems={'center'} gap={2} onClick={()=>router.back()} cursor={'pointer'}> <FaChevronCircleLeft />  Go back</Flex>
           <Flex
