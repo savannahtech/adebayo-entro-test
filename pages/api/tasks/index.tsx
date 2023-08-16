@@ -6,7 +6,18 @@ export default async function handle(req, res) {
 
     try {
         if (req.method === "GET") {
-            const tasks = await prisma.task.findMany({include: { assignee: true }});
+            const {lastID, page} = req.query
+            const tasks = await prisma.task.findMany({
+                skip:  page > 1 ? Number(page * 5) - 5: 0,
+                take: 5,
+                // cursor: {
+                //   id: Number(page * 5),
+                // },
+              orderBy: {
+                id: 'asc',
+              },
+              include: { assignee: true }
+            });
       
             if (tasks.length !== 0) {
               res.json(tasks);
@@ -42,6 +53,7 @@ export default async function handle(req, res) {
           } 
     } catch (error) {
       console.log(error)
+      console.log(req.query)
         res.status(500).send({ error });
     }
     

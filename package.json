@@ -21,7 +21,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.4",
-    "react-icons": "^4.10.1"
+    "react-hotkeys-hook": "^4.4.1",
+    "react-icons": "^4.10.1",
+    "use-keyboard-shortcut": "^1.1.6"
   },
   "devDependencies": {
     "@types/cors": "2.8.13",
