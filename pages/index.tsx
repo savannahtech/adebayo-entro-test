@@ -57,7 +57,7 @@ export default function Home() {
         </Text>
         <Link href={'/task/create-task'}>
           <Button bg={"#DFE3EB"} color={"#98A2B3"} fontSize={12} fontWeight={500}>
-            New task
+            New task 
           </Button>
         </Link>
         
