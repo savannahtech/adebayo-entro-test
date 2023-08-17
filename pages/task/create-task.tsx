@@ -81,8 +81,8 @@ export default function CreateTask() {
   const getUsers = async () => {
     try {
       const res = await fetch(`/api/users`);
+      const data = await res.json();
       if (res.ok) {
-        const data = await res.json();
         setUsers(data);
       }else{
         return toast({
