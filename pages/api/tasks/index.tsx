@@ -8,13 +8,13 @@ export default async function handle(req, res) {
         if (req.method === "GET") {
             const {lastID, page} = req.query
             const tasks = await prisma.task.findMany({
-                skip:  Number(page) > 1 ? Number(Number(page) * 5) - 5: 0,
+                skip:  Number(page) > 1 ? Number(Number(page) * 5) - 4: 0,
                 take: 5,
                 // cursor: {
                 //   id: Number(page * 5),
                 // },
               orderBy: {
-                id: 'asc',
+                id: 'desc',
               },
               include: { assignee: true }
             });

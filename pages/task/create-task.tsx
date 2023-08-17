@@ -162,7 +162,7 @@ export default function CreateTask() {
               display={{ base: "block", md: "flex" }}
               mt={2}
             >
-              <FormControl isInvalid={errors.title !== null}>
+              <FormControl>
                 <FormLabel>Task Title</FormLabel>
                 <Input
                   id="title"
@@ -189,7 +189,7 @@ export default function CreateTask() {
               </FormControl>
 
               <Flex w={"70%"} mt={2}>
-                <FormControl isInvalid={errors.assignee !== null}>
+                <FormControl>
                   <FormLabel>Assign To</FormLabel>
                   <Select
                     id="assignee"
@@ -220,7 +220,7 @@ export default function CreateTask() {
                 <Text py={4} fontSize={12} fontWeight={500} color={"#98A2B3"}>
                   Description
                 </Text>
-                <FormControl isInvalid={errors.description !== null}>
+                <FormControl>
                   <Textarea
                     bg={"#EEF2F8"}
                     color={"#475467"}
