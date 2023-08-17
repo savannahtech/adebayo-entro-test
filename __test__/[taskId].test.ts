@@ -1,4 +1,3 @@
-
 import { createMocks, RequestMethod } from 'node-mocks-http';
 import { NextApiRequest, NextApiResponse } from 'next';
 import handle from '../pages/api/tasks';
