@@ -6,7 +6,7 @@ import {
   Image,
   Spacer,
   Stack,
-  Text,
+  Text
 } from "@chakra-ui/react";
 import moment from "moment";
 import Link from "next/link";

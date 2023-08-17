@@ -3,13 +3,25 @@
         "browser": true,
         "es2021": true
     },
-    "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+    "extends": [
+        "standard-with-typescript",
+        "plugin:@next/next/recommended",
+        "eslint:recommended" 
+    ],
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": ["tsconfig.json"]
     },
-    "plugins": ["react"]
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": "off",
+        "@typescript-eslint/semi": ["error"]
+    }
 }

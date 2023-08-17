@@ -8,7 +8,7 @@ const AppTheme = extendTheme({
   },
 });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: any) {
   return (
     <ChakraProvider theme={AppTheme}>
       <Component {...pageProps} />

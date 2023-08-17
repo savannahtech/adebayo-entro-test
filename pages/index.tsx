@@ -22,7 +22,7 @@ import Link from "next/link";
 import { useKeyPress } from "../utils/keypress";
 import { useHotkeys } from "react-hotkeys-hook";
 export default function Home() {
-  const [tasks, setTasks] = React.useState([]);
+  const [tasks, setTasks] = React.useState<any>([]);
   const [page, setPage] = React.useState(1);
   const [prevLastId, setPrevLastId] = React.useState(1);
   const toast = useToast();
@@ -115,7 +115,7 @@ export default function Home() {
           </Flex>
           <div data-testid="all-todo">
             <Box>
-              {tasks?.map((e, i) => (
+              {tasks?.map((e: any, i:number) => (
                 <TodoCard data={e} key={e?.id} />
               ))}
               {page > 1 && (

@@ -40,14 +40,25 @@ import TodoCard from "../../components/todo_card";
 import moment from "moment";
 import { useForm } from "react-hook-form";
 import Head from "next/head";
+type TaskDetailType = {
+  id: '',
+  title: '',
+  description: '',
+  createdAt: '',
+  assignee: {
+      name: '',
+  },
+  status: '',
+  relatedTasks: []
+};
 export default function CreateTask() {
   const router = useRouter();
   const [users, setUsers] = React.useState([]);
-  const [tasks, setTasks] = React.useState([]);
+  const [tasks, setTasks] = React.useState<any>([]);
   const [page, setPage] = React.useState(1);
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [step, setStep] = React.useState(1);
+  const [step, setStep] = React.useState<number>(1);
   const { value: selectedTasks, getCheckboxProps } = useCheckboxGroup({
     defaultValue: [],
   });
@@ -113,7 +124,7 @@ export default function CreateTask() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  async function onSubmit(values) {
+  async function onSubmit(values: any) {
     setValue("relatedTasks", selectedTasks);
     const data = { ...values, relatedTasks: selectedTasks.join() };
     try {
@@ -234,7 +245,7 @@ export default function CreateTask() {
                     borderColor={"#E3E4E8"}
                     w={"100%"}
                   >
-                    {users?.map((e) => (
+                    {users?.map((e:any) => (
                       <option key={e?.id} value={e?.id}>
                         {e?.name}
                       </option>
@@ -314,7 +325,7 @@ export default function CreateTask() {
               <ModalCloseButton />
               <ModalBody>
                 <SimpleGrid columns={2} spacing={5}>
-                  {tasks?.map((e) => (
+                  {tasks?.map((e:any) => (
                     <Checkbox
                       mb={2}
                       style={{ color: "secondary" }}
