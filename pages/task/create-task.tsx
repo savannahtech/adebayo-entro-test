@@ -33,6 +33,7 @@ import {
   useDisclosure,
   useCheckboxGroup,
   Checkbox,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { FaChevronCircleLeft, FaChevronRight, FaPlus } from "react-icons/fa";
 import TodoCard from "../../components/todo_card";
@@ -43,6 +44,7 @@ export default function CreateTask() {
   const router = useRouter();
   const [users, setUsers] = React.useState([]);
   const [tasks, setTasks] = React.useState([]);
+  const [page, setPage] = React.useState(1);
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [step, setStep] = React.useState(1);
@@ -50,14 +52,15 @@ export default function CreateTask() {
     defaultValue: [],
   });
 
-  const getTasks = async () => {
+  const getTasks = async ({page = 1, type = 'next'}) => {
     try {
-      const res = await fetch("/api/tasks");
-
+      const res = await fetch(`/api/tasks?page=${page}&lastID=1`);
       if (res.ok) {
         const data = await res.json();
+        if(tasks.length > 0){
+          let ld = tasks.slice(-1)[0]?.id;
+        }
         setTasks(data);
-        console.log(data);
       }
     } catch (e) {
       return toast({
@@ -70,13 +73,25 @@ export default function CreateTask() {
     }
   };
 
+  const handlePaginate = (page:any, type:string) => {
+    setPage(page)
+    getTasks({ page: page, type:type });
+  }
+
   const getUsers = async () => {
     try {
       const res = await fetch(`/api/users`);
       if (res.ok) {
         const data = await res.json();
         setUsers(data);
-        console.log(data);
+      }else{
+        return toast({
+          title: "An error occurred.",
+          description: `Error when fetching users: ${data?.error}`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
     } catch (e) {
       return toast({
@@ -95,46 +110,56 @@ export default function CreateTask() {
     control,
     setValue,
     reset,
-    formState : { errors, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   async function onSubmit(values) {
-    setValue('relatedTasks', selectedTasks)
-    const data = {...values, 'relatedTasks': selectedTasks.join()}
+    setValue("relatedTasks", selectedTasks);
+    const data = { ...values, relatedTasks: selectedTasks.join() };
     try {
-        const res = await fetch("/api/tasks", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-        });
-        reset()
+      const res = await fetch("/api/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const response = await res.json();
+      if (res.ok) {
+        reset();
         toast({
-            title: "Success",
-            description: "Task Created Successfully.",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
+          title: "Success",
+          description: "Task Created Successfully.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
         });
-        router.push('/');
-    } catch (error) {
+        router.push("/");
+      }else{
         return toast({
-            title: "An error occurred.",
-            description: `Error adding task:, ${error}`,
-            status: "error",
-            duration: 5000,
-            isClosable: true,
+          title: "An error occurred.",
+          description: `Error adding task:, ${response?.error}`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
         });
+      }
+    } catch (error) {
+      return toast({
+        title: "An error occurred.",
+        description: `Error adding task:, ${error}`,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
-
   }
 
   React.useEffect(() => {
-    getTasks();
+    getTasks({ page: page, type: 'prev' });
     getUsers();
   }, []);
   return (
     <Box p={16} bg={"#fff"}>
-        <Head>
+      <Head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=yes"
@@ -147,7 +172,16 @@ export default function CreateTask() {
       </Head>
       <form onSubmit={handleSubmit(onSubmit)} data-testid="create-todo">
         <Box bg={"#F7F9FC"} p={6} w={"80%"} margin={"auto"}>
-          <Flex mb={5} alignItems={'center'} gap={2} onClick={()=>router.back()} cursor={'pointer'}> <FaChevronCircleLeft />  Go back</Flex>
+          <Flex
+            mb={5}
+            alignItems={"center"}
+            gap={2}
+            onClick={() => router.back()}
+            cursor={"pointer"}
+          >
+            {" "}
+            <FaChevronCircleLeft /> Go back
+          </Flex>
           <Flex
             display={{ base: "block", md: "flex" }}
             alignItems={"center"}
@@ -250,7 +284,7 @@ export default function CreateTask() {
                   <TabPanels>
                     <TabPanel>
                       {selectedTasks.map((e) => {
-                        const x = tasks.find((x) => x?.id == e);
+                        const x = tasks.find((x:any) => x?.id == e);
                         return <TodoCard data={x} />;
                       })}
                       <Flex
@@ -279,19 +313,43 @@ export default function CreateTask() {
               <ModalHeader>Select Related Tasks</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                {tasks?.map((e) => (
-                  <Checkbox
-                    mb={2}
-                    style={{ color: "secondary" }}
-                    {...getCheckboxProps({ value: e?.id })}
-                  >
-                    <Text>{e?.title}</Text>
-                  </Checkbox>
-                ))}
+                <SimpleGrid columns={2} spacing={5}>
+                  {tasks?.map((e) => (
+                    <Checkbox
+                      mb={2}
+                      style={{ color: "secondary" }}
+                      {...getCheckboxProps({ value: e?.id })}
+                    >
+                      <Text>{e?.title}</Text>
+                    </Checkbox>
+                  ))}
+                </SimpleGrid>
+                
               </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                {page > 1 && (
+                    <Button
+                      bg={"#0F52BA"}
+                      color={"#fff"}
+                      p={5}
+                      onClick={() => handlePaginate(page - 1, 'prev')}
+                    >
+                      Previous
+                    </Button>
+                  )}
+                  {tasks.length >= 5 && (
+                    <Button
+                      ml={3}
+                      bg={"#0F52BA"}
+                      color={"#fff"}
+                      p={5}
+                      onClick={() => handlePaginate(page + 1, 'next')}
+                    >
+                      Next
+                    </Button>
+                  )}
+                <Button colorScheme="blue" ml={3} onClick={onClose}>
                   Close
                 </Button>
               </ModalFooter>
@@ -299,17 +357,27 @@ export default function CreateTask() {
           </Modal>
 
           <Flex gap={3} justifyContent={"flex-end"}>
-            {
-                step == 1 && <Button bg={"#0F52BA"} color={"#fff"} p={5} onClick={()=>setStep(2)}>
-              Next
-            </Button>
-            }
-            {
-                step > 1 && <Button type="submit" bg={"#DFE3EB"} color={"#475467"} p={5} isLoading={isSubmitting}>
-              Finish
-            </Button>
-            }
-            
+            {step == 1 && (
+              <Button
+                bg={"#0F52BA"}
+                color={"#fff"}
+                p={5}
+                onClick={() => setStep(2)}
+              >
+                Next
+              </Button>
+            )}
+            {step > 1 && (
+              <Button
+                type="submit"
+                bg={"#DFE3EB"}
+                color={"#475467"}
+                p={5}
+                isLoading={isSubmitting}
+              >
+                Finish
+              </Button>
+            )}
           </Flex>
           {/* <Flex gap={16}>
               <Stack>
