@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
 
-const prisma: any = new PrismaClient();
+const prisma: any = new PrismaClient()
 // if (process.env.NODE_ENV === "production") {
 //   prisma = new PrismaClient();
 // } else {
@@ -10,4 +10,4 @@ const prisma: any = new PrismaClient();
 //   prisma = global.prisma;
 // }
 
-export default prisma;
+export default prisma

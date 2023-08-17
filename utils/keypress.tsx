@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 
-export const useKeyPress = (keys, callback, node = null) => {
+export const useKeyPress = (keys:any, callback:any, node = null) => {
   // implement the callback ref pattern
   const callbackRef = useRef(callback);
   useLayoutEffect(() => {
@@ -9,9 +9,9 @@ export const useKeyPress = (keys, callback, node = null) => {
 
   // handle what happens on key press
   const handleKeyPress = useCallback(
-    (event) => {
+    (event:any) => {
       // check if one of the key is part of the ones we want
-      if (keys.some((key) => event.key === key)) {
+      if (keys.some((key:any) => event.key === key)) {
         callbackRef.current(event);
       }
     },

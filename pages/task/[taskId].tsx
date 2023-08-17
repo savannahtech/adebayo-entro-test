@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import React from "react";
+import { useRouter } from 'next/router'
+import React from 'react'
 import {
   Box,
   Flex,
@@ -15,126 +15,125 @@ import {
   TabPanel,
   TabPanels,
   useToast
-} from "@chakra-ui/react";
-import { FaChevronCircleLeft, FaChevronRight, FaPlus } from "react-icons/fa";
-import TodoCard from "../../components/todo_card";
-import moment from "moment";
-import Head from "next/head";
+} from '@chakra-ui/react'
+import { FaChevronCircleLeft, FaChevronRight } from 'react-icons/fa'
+import TodoCard from '../../components/todo_card'
+import moment from 'moment'
+import Head from 'next/head'
 
-type TaskDetailType = {
-  id: '',
-  title: '',
-  description: '',
-  createdAt: '',
+interface TaskDetailType {
+  id: ''
+  title: ''
+  description: ''
+  createdAt: ''
   assignee: {
-      name: '',
-  },
-  status: '',
+    name: ''
+  }
+  status: ''
   relatedTasks: []
-};
+}
 
-export default function TaskDetail() {
-  const router = useRouter();
-  const { taskId } = router.query;
-  const [task, setTask] = React.useState<TaskDetailType>();
+export default function TaskDetail () {
+  const router = useRouter()
+  const { taskId } = router.query
+  const [task, setTask] = React.useState<TaskDetailType>()
   const toast = useToast()
   const getTask = async () => {
     try {
-      const res = await fetch(`/api/tasks/${taskId}`);
+      const res = await fetch(`/api/tasks/${taskId}`)
       if (res.ok) {
-        const data = await res.json();
-        setTask(data);
-        console.log(data);
+        const data = await res.json()
+        setTask(data)
+        console.log(data)
       }
     } catch (e) {
       return toast({
-        title: "An error occurred.",
+        title: 'An error occurred.',
         description: `Error when fetching list of tasks:, e ${e}`,
-        status: "error",
+        status: 'error',
         duration: 5000,
-        isClosable: true,
-      });
+        isClosable: true
+      })
     }
   }
 
   React.useEffect(() => {
-    getTask();
-    
-  }, []);
+    getTask()
+  }, [])
   return (
-    <Box p={16} bg={"#fff"}>
-       <Head>
+    <Box p={16} bg={'#fff'}>
+      <Head>
         <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=yes"
+          name='viewport'
+          content='width=device-width, initial-scale=1.0, user-scalable=yes'
         />
         <meta
-          name="description"
-          content="Simple Next.js todo web application."
+          name='description'
+          content='Simple Next.js todo web application.'
         />
         <title>Task Details</title>
       </Head>
       <Center>
-        <Box bg={"#F7F9FC"} p={6} w={"50%"}>
-          <Flex mb={5} alignItems={'center'} gap={2} onClick={()=>router.back()} cursor={'pointer'}> <FaChevronCircleLeft/>  Go back</Flex>
+        <Box bg={'#F7F9FC'} p={6} w={'50%'}>
+          <Flex mb={5} alignItems={'center'} gap={2} onClick={() => { router.back() }} cursor={'pointer'}> <FaChevronCircleLeft/>  Go back</Flex>
           <Flex
-            display={{ base: "block", md: "flex" }}
-            alignItems={"center"}
+            display={{ base: 'block', md: 'flex' }}
+            alignItems={'center'}
             mb={8}
           >
-            <Image src={"/pocket.svg"} />
+            <Image src={'/pocket.svg'} />
             <Box w={8} />
             <Stack>
-              <Text color={"#101828"} fontSize={14} fontWeight={600}>
+              <Text color={'#101828'} fontSize={14} fontWeight={600}>
                 {task?.title}
               </Text>
-              <Text color={"#98A2B3"} fontSize={12} fontWeight={600}>
-                {task?.assignee?.name} .{" "}
-                <Text as={"span"} fontWeight={500}>
+              <Text color={'#98A2B3'} fontSize={12} fontWeight={600}>
+                {task?.assignee?.name} .{' '}
+                <Text as={'span'} fontWeight={500}>
                   Creation Date
-                </Text>{" "}
-                <Text as={"span"} fontWeight={400}>
+                </Text>{' '}
+                <Text as={'span'} fontWeight={400}>
                   {moment(task?.createdAt).format('MMM D, YYYY h:mm a')}
-                </Text>{" "}
+                </Text>{' '}
               </Text>
             </Stack>
           </Flex>
           <Divider />
           <Flex gap={16}>
             <Stack>
-              <Text fontSize={12} fontWeight={500} color={"#98A2B3"}>
+              <Text fontSize={12} fontWeight={500} color={'#98A2B3'}>
                 Status
               </Text>
               <Tag borderRadius={16}>{task?.status}</Tag>
             </Stack>
             <Stack>
-              <Text fontSize={12} fontWeight={500} color={"#98A2B3"}>
+              <Text fontSize={12} fontWeight={500} color={'#98A2B3'}>
                 Date created
               </Text>
               <Tag borderRadius={16}>{moment(task?.createdAt).format('MMM D, YYYY h:mm a')}</Tag>
             </Stack>
             <Stack>
-              <Text fontSize={12} fontWeight={500} color={"#98A2B3"}>
+              <Text fontSize={12} fontWeight={500} color={'#98A2B3'}>
                 Assignee
               </Text>
               <Tag borderRadius={16}>Unassigned</Tag>
             </Stack>
           </Flex>
           <Box mt={6}>
-            <Text py={4} fontSize={12} fontWeight={500} color={"#98A2B3"}>
+            <Text py={4} fontSize={12} fontWeight={500} color={'#98A2B3'}>
               Description
             </Text>
-            <Flex alignItems={"center"} gap={2}>
+            <Flex alignItems={'center'} gap={2}>
               <Box
                 p={5}
-                bg={"#EEF2F8"}
+                bg={'#EEF2F8'}
                 fontSize={13}
                 fontWeight={500}
-                color={"#475467"}
+                color={'#475467'}
               >
                 {task?.description}
               </Box>
-              <FaChevronRight color="#98A2B3" />
+              <FaChevronRight color='#98A2B3' />
             </Flex>
           </Box>
           <Box mt={8}>
@@ -166,5 +165,5 @@ export default function TaskDetail() {
         </Box>
       </Center>
     </Box>
-  );
+  )
 }
