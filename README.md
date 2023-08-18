@@ -16,7 +16,7 @@ Features
 ## Documentation
 
 [Hosted here](https://entro-37e7ea2207ea.herokuapp.com/)
-
+https://entro-37e7ea2207ea.herokuapp.com/
 1. Clone the repository
 2. cd into the project root folder
 3. Install the dependencies 
