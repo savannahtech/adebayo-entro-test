@@ -7,6 +7,9 @@ export default async function handle (
 ) {
   try {
     if (req.method === 'GET') {
+      if (!req.query.taskId) {
+        res.status(404).send({ error: 'No Task Found' })
+      }
       const task = await prisma.task.findUnique({
         where: {
           id: Number(req.query.taskId)

@@ -11,11 +11,13 @@ import TodoCard from '../components/todo_card'
 import React from 'react'
 import Link from 'next/link'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { useRouter } from 'next/router'
 export default function Home () {
   const [tasks, setTasks] = React.useState<any>([])
   const [page, setPage] = React.useState(1)
   const [prevLastId, setPrevLastId] = React.useState(1)
   const toast = useToast()
+  const router = useRouter()
   const getTasks = async ({ page = 1, type = 'next' }) => {
     let lastData = prevLastId
     if (type === 'next') {
@@ -47,7 +49,7 @@ export default function Home () {
     getTasks({ page: page, type: type })
   }
 
-  useHotkeys('ctrl+shift+1', () => { console.log('New') })
+  useHotkeys('ctrl+shift+1', () => { router.push('/task/create-task') })
 
   React.useEffect(() => {
     getTasks({ page: page, type: 'prev' })

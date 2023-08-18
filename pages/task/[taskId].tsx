@@ -59,7 +59,7 @@ export default function TaskDetail () {
 
   React.useEffect(() => {
     getTask()
-  }, [])
+  }, [router.isReady])
   return (
     <Box p={16} bg={'#fff'}>
       <Head>
@@ -116,7 +116,7 @@ export default function TaskDetail () {
               <Text fontSize={12} fontWeight={500} color={'#98A2B3'}>
                 Assignee
               </Text>
-              <Tag borderRadius={16}>Unassigned</Tag>
+              <Tag borderRadius={16}>{task?.assignee?.name}</Tag>
             </Stack>
           </Flex>
           <Box mt={6}>

@@ -5,6 +5,14 @@ Task app for Entro
 
 
 
+## Appendix
+
+Features
+
+1. Get list of task
+2. Add New task
+3. Get task details
+4. Pagination
 ## Documentation
 
 [Documentation](https://linktodocumentation)
@@ -17,13 +25,13 @@ Task app for Entro
 Clone the project
 
 ```bash
-  git clone https://github.com/savannahtech/adebayo-entro-test.git
+  git clone https://link-to-project
 ```
 
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd adebayo-entro-test
 ```
 
 Install dependencies
@@ -37,11 +45,5 @@ Start the server
 
 ```bash
   npm run dev
-```
-
-Run Test
-
-```bash
-  npm run test
 ```
 
