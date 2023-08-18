@@ -15,7 +15,6 @@ Features
 4. Pagination
 ## Documentation
 
-[Documentation](https://linktodocumentation)
 [Hosted here](https://entro-37e7ea2207ea.herokuapp.com/)
 
 1. Clone the repository
