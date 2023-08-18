@@ -16,10 +16,11 @@ Features
 ## Documentation
 
 [Documentation](https://linktodocumentation)
+[Hosted here](https://entro-37e7ea2207ea.herokuapp.com/)
 
 1. Clone the repository
 2. cd into the project root folder
-2. Install the dependencies 
+3. Install the dependencies 
 ## Run Locally
 
 Clone the project
